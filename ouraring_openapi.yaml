@@ -1,0 +1,291 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Oura Ring
+servers:
+  - url: https://api.ouraring.com/v1
+paths:	
+  /userinfo:
+    get:
+      summary: Get personal information for the user
+      operationId: userinfo
+      responses:
+        '200':
+          description: Personal info for the user
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/PersonalInfo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sleep:
+    get:
+      summary: Get sleep summaries
+      operationId: sleep
+      parameters:
+        - in: query
+          name: start
+          schema:
+            type: string
+          description: The start date (inclusive)
+        - in: query
+          name: end
+          schema:
+            type: string
+          description: The end date (inclusive)
+      responses:
+        '200':
+          description: Sleep summary
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/SleepSummary"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /activity:
+    get:
+      summary: Get activity summaries
+      operationId: activity
+      parameters:
+        - in: query
+          name: start
+          schema:
+            type: string
+          description: The start date (inclusive)
+        - in: query
+          name: end
+          schema:
+            type: string
+          description: The end date (inclusive)
+      responses:
+        '200':
+          description: Activity summary
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/ActivitySummary"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    PersonalInfo:
+      type: object
+      required:
+        - age
+        - weight
+        - gender
+        - email
+      properties:
+        age:
+          type: integer
+        weight:
+          type: integer
+        gender:
+          type: string
+        email:
+          type: string
+    SleepSummary:
+      type: object
+      required:
+       - sleep
+      properties:
+        sleep:
+          type: array
+          items:
+            type: object
+            properties:
+              summary_date:
+                type: string
+              period_id:
+                type: number
+              is_longest:
+                type: number
+              timezone:
+                type: number
+              bedtime_end:
+                type: string
+              bedtime_start:
+                type: string
+              breath_average:
+                type: number
+              duration:
+                type: number
+              total:
+                type: number
+              awake:
+                type: number
+              rem:
+                type: number
+              deep:
+                type: number
+              light:
+                type: number
+              midpoint_time:
+                type: number
+              efficiency:
+                type: number
+              restless:
+                type: number
+              onset_latency:
+                type: number
+              hr_5min:
+                type: array
+                items:
+                  type: number
+              hr_average:
+                type: number
+              hr_lowest:
+                type: number
+              hypnogram_5min:
+                type: string
+              rmssd:
+                type: number
+              rmssd_5min:
+                type: array
+                items:
+                  type: number
+              score:
+                type: number
+              score_alignment:
+                type: number
+              score_deep:
+                type: number
+              score_disturbances:
+                type: number
+              score_efficiency":
+                type: number
+              score_latency:
+                type: number
+              score_rem:
+                type: number
+              score_total:
+                type: number
+              temperature_deviation:
+                type: number
+              bedtime_start_delta:
+                type: number
+              bedtime_end_delta:
+                type: number
+              midpoint_at_delta:
+                type: number
+              temperature_delta:
+                type: number
+              temperature_trend_deviation:
+                type: number
+                nullable: true
+    ActivitySummary:
+      type: object
+      required:
+      - activity
+      properties:
+        activity:
+          type: array
+          items:
+            type: object
+            properties:
+              summary_date:
+                type: string
+              timezone:
+                type: number
+              day_start:
+                type: string
+              day_end:
+                type: string
+              cal_active:
+                type: number
+              cal_total:
+                type: number
+              class_5min:
+                type: array
+                items:
+                  type: number
+              steps:
+                type: number
+              daily_movement:
+                type: number
+              non_wear:
+                type: number
+              rest:
+                type: number
+              inactive:
+                type: number
+              low:
+                type: number
+              medium:
+                type: number
+              high:
+                type: number
+              inactivity_alerts:
+                type: number
+              average_met:
+                type: number
+              met_1min:
+                type: array
+                items:
+                  type: number
+              met_min_inactive:
+                type: number
+              met_min_low:
+                type: number
+              met_min_medium:
+                type: number
+              met_min_high:
+                type: number
+              target_calories:
+                type: number
+              target_km:
+                type: number
+              target_miles:
+                type: number
+              to_target_km:
+                type: number
+              to_target_miles:
+                type: number
+              score:
+                type: number
+              score_meet_daily_targets:
+                type: number
+              score_move_every_hour:
+                type: number
+              score_recovery_time:
+                type: number
+              score_stay_active:
+                type: number
+              score_training_frequency:
+                type: number
+              score_training_volume:
+                type: number
+              rest_mode_state:
+                type: number
+              total:
+                type: number
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: access_token
+security:
+  - ApiKeyAuth: []
