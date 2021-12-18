@@ -8,7 +8,7 @@ Client generation is done using https://github.com/deepmap/oapi-codegen
 
 To regenerate the client, run the command
 ```
-oapi-codegen ouraring_openapi.yaml --package ouraring > ouraring.gen.go
+oapi-codegen --package ouraring ouraring_openapi.yaml > ouraring.gen.go
 ```
 
 ## Extending the schema definition

@@ -208,9 +208,7 @@ components:
               cal_total:
                 type: number
               class_5min:
-                type: array
-                items:
-                  type: number
+                type: string
               steps:
                 type: number
               daily_movement:
