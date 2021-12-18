@@ -17,3 +17,16 @@ At this time, the schema definition is not complete.
 If there is data which you would like to fetch but it is not available, consider adding it to the schema definition
 and regenerating the client.
 
+## Example usage
+Get your personal access token from AuraRing
+https://cloud.ouraring.com/personal-access-tokens
+
+```bash
+export OURA_ACCESS_TOKEN="YOUR_PERSONAL_ACCESS_TOKEN"
+go run example/main.go
+```
+
+Should fetch your activity score for today:
+```
+Activity Score: 81
+```

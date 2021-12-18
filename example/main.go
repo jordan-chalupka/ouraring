@@ -6,9 +6,15 @@ import (
 	"log"
 	"os"
 	"ouraring"
+	"time"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
 )
+
+func getCurrentDate() string {
+	currentTime := time.Now()
+	return currentTime.Format("2017-09-27")
+}
 
 func main() {
 	var (
@@ -26,7 +32,8 @@ func main() {
 	}
 
 	ctx := context.Background()
-	start, end := "2021-12-17", "2021-12-17"
+	// Get the activity score for today
+	start, end := getCurrentDate(), getCurrentDate()
 	params := &ouraring.ActivityParams{
 		Start: &start,
 		End:   &end,
@@ -37,5 +44,6 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Since start date and end date are the same, we should only get 1 result
 	fmt.Printf("Activity Score: %v\n", *resp.JSON200.Activity[0].Score)
 }
